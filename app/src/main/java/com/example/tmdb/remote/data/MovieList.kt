@@ -1,4 +1,4 @@
-package com.example.tmdb
+package com.example.tmdb.remote.data
 
 data class MovieList(
     val page: Int,
