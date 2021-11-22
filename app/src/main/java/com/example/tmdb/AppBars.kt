@@ -14,14 +14,14 @@ object AppBars {
         TopAppBar(
             title = { Text(text = title, color = Color.White) },
             backgroundColor = Color(R.color.TMDB_primary),
-            actions = {
-                IconButton(onClick = openSearch) {
-                    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
-                }
+//            actions = {
+//                IconButton(onClick = openSearch) {
+//                    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+//                }
 //                IconButton(onClick = openFilters) {
 //                    Icon(imageVector = Icons.Filled.FilterList, contentDescription = "Filter")
 //                }
-            }
+//            }
         )
     }
 
