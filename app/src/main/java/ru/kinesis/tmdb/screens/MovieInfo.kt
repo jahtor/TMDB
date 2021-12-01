@@ -11,15 +11,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.example.tmdb.MovieViewModel
+import ru.kinesis.tmdb.MovieViewModel
 
+/*
 @Composable
-fun MovieInfo(id: String) {
+fun MovieInfo(id: Int) {
     val vm = MovieViewModel()
     vm.getMovieInfo(id)
     Scaffold(
         topBar = {
-            ru.kinesis.tmdb.AppBars.TopBar(title = "title",
+            ru.kinesis.tmdb.presentation.AppBars.TopBar(title = "title",
             openSearch = {},
             openFilters = {}
         ) }
@@ -55,3 +56,4 @@ fun MovieInfo(id: String) {
         }
     }
 }
+*/

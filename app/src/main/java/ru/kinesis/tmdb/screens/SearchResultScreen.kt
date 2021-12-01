@@ -16,16 +16,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.tmdb.MovieViewModel
-import com.example.tmdb.Screen
+import ru.kinesis.tmdb.MovieViewModel
+import ru.kinesis.tmdb.Screen
 
+/*
 @Composable
 fun SearchResultScreen(navController: NavController, search: String?) {
     val vm = MovieViewModel()
     vm.getMovieSearchList(search!!)
     Scaffold(
         topBar = {
-            ru.kinesis.tmdb.AppBars.TopBar(title = search,
+            ru.kinesis.tmdb.presentation.AppBars.TopBar(title = search,
             openSearch = {},
             openFilters = {}
         ) }
@@ -79,3 +80,4 @@ fun SearchResultScreen(navController: NavController, search: String?) {
         }
     }
 }
+*/

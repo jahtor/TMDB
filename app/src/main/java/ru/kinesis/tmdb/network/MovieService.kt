@@ -8,7 +8,7 @@ import ru.kinesis.tmdb.network.responses.MovieSearchResponse
 
 private const val apiKey = "1d01b7b13ae2499acb0254eb582bf5d7"
 
-interface MovieInterface {
+interface MovieService {
 
     //делаем запрос на поиск и отправляем результат в MovieSearchResponse
     @GET("search/movie?api_key=$apiKey")

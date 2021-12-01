@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tmdb.domain.MovieApi
-import com.example.tmdb.domain.model.Movie
-import com.example.tmdb.domain.model.MovieSearchList
+import ru.kinesis.tmdb.MovieApi
+import ru.kinesis.tmdb.domain.model.Movie
+import ru.kinesis.tmdb.domain.model.MovieSearchList
 import kotlinx.coroutines.launch
 
 const val PAGE_SIZE = 20
@@ -33,8 +33,9 @@ class MovieViewModel : ViewModel() {
         }
     }
 
+/*
     //функция запроса информации о фильме по id из API
-    fun getMovieInfo(id: String) {
+    fun getMovieInfo(id: Int) {
         viewModelScope.launch {
             val apiService = MovieApi.getInstance()
             try {
@@ -45,4 +46,5 @@ class MovieViewModel : ViewModel() {
             }
         }
     }
+*/
 }

@@ -58,12 +58,12 @@ class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
     }
 
     //функция мапит каждый элемент списка из сетевой модели в доменную
-    fun fromEntityList(initial: List<MovieDto>): List<Movie>{
+    fun toDomainList(initial: List<MovieDto>): List<Movie>{
         return initial.map { mapToDomainModel(it) }
     }
 
     //функция мапит все элементы обратно в сетевую модель из доменной
-    fun toEntityList(initial: List<Movie>): List<MovieDto>{
+    fun fromDomainList(initial: List<Movie>): List<MovieDto>{
         return initial.map { mapFromDomainModel(it) }
     }
 }

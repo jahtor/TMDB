@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb.network
+package ru.kinesis.tmdb
 
 import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.domain.model.MovieSearchList
@@ -20,7 +20,7 @@ interface MovieApi {
 
     @GET("movie/{id}?api_key=$apiKey")
     suspend fun getMovieInfo(
-        @Path("id") name: String
+        @Path("id") name: Int
     ): Movie
 
     companion object {

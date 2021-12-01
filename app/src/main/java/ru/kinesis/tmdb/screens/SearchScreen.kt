@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.tmdb.R
-import com.example.tmdb.Screen
+import ru.kinesis.tmdb.R
+import ru.kinesis.tmdb.Screen
 
 @Composable
 fun SearchScreen(navController: NavController) {

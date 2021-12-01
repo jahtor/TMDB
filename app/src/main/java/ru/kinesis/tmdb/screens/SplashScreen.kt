@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.example.tmdb.R
-import com.example.tmdb.Screen
+import ru.kinesis.tmdb.R
+import ru.kinesis.tmdb.Screen
 import kotlinx.coroutines.delay
 
 @Composable

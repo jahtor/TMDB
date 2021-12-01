@@ -1,15 +1,16 @@
-package ru.kinesis.tmdb
+package ru.kinesis.tmdb.presentation
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import ru.kinesis.tmdb.R
 
 object AppBars {
     @Composable
     fun TopBar(title: String, openSearch: () -> Unit, openFilters: () -> Unit) {
         TopAppBar(
             title = { Text(text = title, color = Color.White) },
-            backgroundColor = Color(com.example.tmdb.R.color.TMDB_primary),
+            backgroundColor = Color(R.color.TMDB_primary),
 //            actions = {
 //                IconButton(onClick = openSearch) {
 //                    Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
