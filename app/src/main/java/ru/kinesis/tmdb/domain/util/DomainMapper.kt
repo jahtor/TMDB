@@ -1,10 +1,10 @@
 package ru.kinesis.tmdb.domain.util
 
-interface EntityMapper <Entity, DomainModel>{
+interface DomainMapper <T, DomainModel>{
 
     //конвертируем данные из сетевой модели в доменную
-    fun mapFromEntity(entity: Entity): DomainModel
+    fun mapToDomainModel(model: T): DomainModel
 
     //конвертируем данные из доменной модели в сетевую
-    fun mapToEntity(domainModel: DomainModel): Entity
+    fun mapFromDomainModel(domainModel: DomainModel): T
 }

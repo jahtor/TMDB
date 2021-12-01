@@ -1,39 +1,39 @@
 package ru.kinesis.tmdb.network.model
 
 import ru.kinesis.tmdb.domain.model.Movie
-import ru.kinesis.tmdb.domain.util.EntityMapper
+import ru.kinesis.tmdb.domain.util.DomainMapper
 
 //мапим данные между моделями
-class MovieNetworkMapper : EntityMapper<MovieNetworkEntity, Movie> {
+class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
 
-    override fun mapFromEntity(entity: MovieNetworkEntity): Movie {
+    override fun mapToDomainModel(model: MovieDto): Movie {
         return Movie(
-            adult = entity.adult,
-            backdrop_path = entity.backdrop_path,
-            budget = entity.budget,
-            homepage = entity.homepage,
-            id = entity.id,
-            imdb_id = entity.imdb_id,
-            original_language = entity.original_language,
-            original_title = entity.original_title,
-            overview = entity.overview,
-            popularity = entity.popularity,
-            poster_path = entity.poster_path,
-            release_date = entity.release_date,
-            revenue = entity.revenue,
-            runtime = entity.runtime,
-            status = entity.status,
-            tagline = entity.tagline,
-            title = entity.original_title,
-            video = entity.video,
-            vote_average = entity.vote_average,
-            vote_count = entity.vote_count
+            adult = model.adult,
+            backdrop_path = model.backdrop_path,
+            budget = model.budget,
+            homepage = model.homepage,
+            id = model.id,
+            imdb_id = model.imdb_id,
+            original_language = model.original_language,
+            original_title = model.original_title,
+            overview = model.overview,
+            popularity = model.popularity,
+            poster_path = model.poster_path,
+            release_date = model.release_date,
+            revenue = model.revenue,
+            runtime = model.runtime,
+            status = model.status,
+            tagline = model.tagline,
+            title = model.original_title,
+            video = model.video,
+            vote_average = model.vote_average,
+            vote_count = model.vote_count
         )
     }
 
     //не будет использоваться, т.к. мы только получаем данные из сети
-    override fun mapToEntity(domainModel: Movie): MovieNetworkEntity {
-        return MovieNetworkEntity(
+    override fun mapFromDomainModel(domainModel: Movie): MovieDto {
+        return MovieDto(
             adult = domainModel.adult,
             backdrop_path = domainModel.backdrop_path,
             budget = domainModel.budget,
@@ -58,12 +58,12 @@ class MovieNetworkMapper : EntityMapper<MovieNetworkEntity, Movie> {
     }
 
     //функция мапит каждый элемент списка из сетевой модели в доменную
-    fun fromEntityList(initial: List<MovieNetworkEntity>): List<Movie>{
-        return initial.map { mapFromEntity(it) }
+    fun fromEntityList(initial: List<MovieDto>): List<Movie>{
+        return initial.map { mapToDomainModel(it) }
     }
 
     //функция мапит все элементы обратно в сетевую модель из доменной
-    fun toEntityList(initial: List<Movie>): List<MovieNetworkEntity>{
-        return initial.map { mapToEntity(it) }
+    fun toEntityList(initial: List<Movie>): List<MovieDto>{
+        return initial.map { mapFromDomainModel(it) }
     }
 }

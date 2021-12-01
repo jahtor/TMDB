@@ -1,7 +1,7 @@
-package ru.kinesis.tmdb.domain
+package ru.kinesis.tmdb.network
 
-import com.example.tmdb.domain.model.Movie
-import com.example.tmdb.domain.model.MovieSearchList
+import ru.kinesis.tmdb.domain.model.Movie
+import ru.kinesis.tmdb.domain.model.MovieSearchList
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
