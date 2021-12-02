@@ -1,11 +1,11 @@
-package ru.kinesis.tmdb
+package ru.kinesis.tmdb._old
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ru.kinesis.tmdb.MovieApi
+import ru.kinesis.tmdb._old.MovieApi
 import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.domain.model.MovieSearchList
 import kotlinx.coroutines.launch

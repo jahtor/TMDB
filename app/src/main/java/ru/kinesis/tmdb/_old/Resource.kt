@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb
+package ru.kinesis.tmdb._old
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null){
     //класс возвращает data если все в порядке

@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb
+package ru.kinesis.tmdb._old
 
 import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.domain.model.MovieSearchList

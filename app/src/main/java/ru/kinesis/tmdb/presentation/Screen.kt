@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb
+package ru.kinesis.tmdb.presentation
 
 sealed class Screen(val route: String) {
     object SplashScreen : Screen("splash_screen")

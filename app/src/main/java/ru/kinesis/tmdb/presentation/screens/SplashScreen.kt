@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb.screens
+package ru.kinesis.tmdb.presentation.screens
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import ru.kinesis.tmdb.R
-import ru.kinesis.tmdb.Screen
+import ru.kinesis.tmdb.presentation.Screen
 import kotlinx.coroutines.delay
 
 @Composable

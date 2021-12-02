@@ -1,4 +1,4 @@
-package ru.kinesis.tmdb.screens
+package ru.kinesis.tmdb.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.kinesis.tmdb.R
-import ru.kinesis.tmdb.Screen
+import ru.kinesis.tmdb.presentation.Screen
 
 @Composable
 fun SearchScreen(navController: NavController) {

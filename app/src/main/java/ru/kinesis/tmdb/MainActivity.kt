@@ -6,17 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import ru.kinesis.tmdb.Screen
+import ru.kinesis.tmdb.presentation.Screen
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
-import ru.kinesis.tmdb.screens.*
+import ru.kinesis.tmdb.presentation.screens.*
 import ru.kinesis.tmdb.ui.theme.TMDBTheme
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,8 +23,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             TMDBTheme {
                 Surface(color = MaterialTheme.colors.background) {
+
                     val viewModel: MovieListViewModel by viewModels()
-                    println("MovieMAinActivity: ${viewModel}")
+                    println("MovieMainActivity: ${viewModel}")
+
+
                     Navigation()
                 }
             }
