@@ -4,18 +4,31 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.kinesis.tmdb.presentation.Screen
+import ru.kinesis.tmdb.presentation.movie_list.MovieList
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
 import ru.kinesis.tmdb.presentation.screens.*
 import ru.kinesis.tmdb.ui.theme.TMDBTheme
 
 @AndroidEntryPoint
+@ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +37,9 @@ class MainActivity : ComponentActivity() {
             TMDBTheme {
                 Surface(color = MaterialTheme.colors.background) {
 
-                    val viewModel: MovieListViewModel by viewModels()
-                    println("MovieMainActivity: ${viewModel}")
-
-
-                    Navigation()
+                    SearchScreen()
+//                    MovieList()
+//                    Navigation()
                 }
             }
         }
@@ -36,16 +47,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+@ExperimentalComposeUiApi
 fun Navigation(){
     //инит навигации
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.SearchScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         //задаем экраны навигации
         composable(route = Screen.SplashScreen.route) {
             SplashScreen(navController)
         }
         composable(route = Screen.SearchScreen.route) {
-            SearchScreen(navController = navController)
+//            SearchScreen(navController = navController)
+            SearchScreen()
         }
 /*
         composable(
