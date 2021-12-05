@@ -11,6 +11,8 @@ import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.repository.MovieRepository
 import javax.inject.Inject
 
+const val PAGE_SIZE = 20
+
 //ViewModel для списка фильмов (из поиска)
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
@@ -19,13 +21,16 @@ class MovieListViewModel @Inject constructor(
 
     val movies: MutableState<List<Movie>> = mutableStateOf(listOf())
 
-    val query = mutableStateOf("")
+    val query = mutableStateOf("big")
 
     val loading = mutableStateOf(false)
 
-//    init{
-//        newSearch("Movie")
-//    }
+    val page = mutableStateOf(1)
+    var movieListScrollPosition = 0
+
+    init{
+        newSearch()
+    }
 
     fun newSearch(){
         viewModelScope.launch {
@@ -41,9 +46,47 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
+    fun nextPage(){
+        viewModelScope.launch {
+            //предотвращаем излишнюю загрузку данных при быстром скролле
+            if((movieListScrollPosition +1) >=(page.value * PAGE_SIZE)){
+                loading.value = true
+                incrementPage()
+//                println("NextPage triggereg: ${page.value}")
+//                delay(3000L) //API fakedelay
+                if(page.value > 1){
+                    val result = repository.search(
+                        page = page.value,
+                        query = query.value
+                    )
+//                    println("Page ${page.value}: ${result}")
+                    appendMovies(result)
+                }
+                loading.value = false
+            }
+        }
+    }
+
+    //добывляем новые результаты посика
+    private fun appendMovies(movies: List<Movie>){
+        val current = ArrayList(this.movies.value)
+        current.addAll(movies)
+        this.movies.value = current
+    }
+
+    private fun incrementPage(){
+        page.value = page.value + 1
+    }
+
+    fun onChangeScrollPosition(position: Int){
+        movieListScrollPosition = position
+    }
+
     //функция очищает список поиска
     private fun resetSearchState(){
         movies.value = listOf()
+        page.value = 1
+        onChangeScrollPosition(0)
     }
 
     fun onQueryChanged(query: String){

@@ -25,6 +25,7 @@ fun LoadImage(
     val bitmapState: MutableState<Bitmap?> = remember { mutableStateOf(null)}
     val context = LocalContext.current
 
+    //показывает заглушку пока картинка загружается
     Glide.with(context)
         .asBitmap()
         .load(defaultImage)
@@ -38,6 +39,7 @@ fun LoadImage(
             }
         })
 
+    //показывает картинку из сети
     Glide.with(context)
         .asBitmap()
         .load(url)

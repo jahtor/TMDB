@@ -1,7 +1,6 @@
 package ru.kinesis.tmdb.presentation.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -14,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -25,7 +23,7 @@ import ru.kinesis.tmdb.R
 import ru.kinesis.tmdb.presentation.components.CircularProgressBar
 import ru.kinesis.tmdb.presentation.components.MovieCard
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
-import java.time.format.TextStyle
+import ru.kinesis.tmdb.presentation.movie_list.PAGE_SIZE
 
 @Composable
 @ExperimentalComposeUiApi
@@ -35,6 +33,7 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
     val query = viewModel.query.value
     val keyboardController = LocalSoftwareKeyboardController.current
     val loading = viewModel.loading.value
+    val page = viewModel.page.value
 
     Column() {
         Surface(
@@ -82,10 +81,11 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
                 )
             }
         }
-        Box(modifier = Modifier
-            .fillMaxSize()
-//            .background(color = MaterialTheme.colors.secondary)
-        ) {
+
+//        Box(modifier = Modifier
+//            .fillMaxSize()
+////            .background(color = MaterialTheme.colors.secondary)
+//        ) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -94,10 +94,14 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
                 itemsIndexed(
                     items = movies
                 ) { index, movie ->
+                    viewModel.onChangeScrollPosition(index)
+                    if((index + 1) >= (page * PAGE_SIZE) && !loading){
+                        viewModel.nextPage()
+                    }
                     MovieCard(movie = movie, onCLick = {})
                 }
             }
             CircularProgressBar(isDisplayed = loading)
         }
-    }
+//    }
 }

@@ -19,7 +19,7 @@ fun CircularProgressBar(isDisplayed: Boolean){
             horizontalArrangement = Arrangement.Center
         ) {
             CircularProgressIndicator(
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.secondary
             )
         }
     }

@@ -7,7 +7,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="TMDB_primary">#0d253f</color>
-    <color name="TMDB_secondary">#01b4e4</color>
-    <color name="TMDB_tertiary">#90cea1</color>
 </resources>
