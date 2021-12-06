@@ -1,10 +1,25 @@
 package ru.kinesis.tmdb.presentation.screens
 
-/*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberImagePainter
+import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
+
 @Composable
 fun MovieInfo(id: Int) {
-    val vm = MovieViewModel()
-    vm.getMovieInfo(id)
+    val viewModel: MovieListViewModel = viewModel()
+
+    Text(text = "MovieId: $id")
+//    viewModel.getMovieInfo(id)
+/*
     Scaffold(
         topBar = {
             ru.kinesis.tmdb.presentation.AppBars.TopBar(title = "title",
@@ -12,12 +27,14 @@ fun MovieInfo(id: Int) {
             openFilters = {}
         ) }
     ) {
+*/
+/*
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp)
         ) {
-            items(vm.idList) { id ->
+            items(viewModel.idList) { id ->
                 Row() {
                     Image(
                         painter = rememberImagePainter("https://image.tmdb.org/t/p/w154" + id.poster_path),
@@ -41,6 +58,6 @@ fun MovieInfo(id: Int) {
                 Text(text = id.overview)
             }
         }
-    }
-}
 */
+//    }
+}

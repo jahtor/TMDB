@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ru.kinesis.tmdb.presentation.components.MovieCard
 
 //отображаем список поиска из элементов MovieCard
@@ -21,7 +23,11 @@ fun MovieList(viewModel: MovieListViewModel = viewModel()) {
         itemsIndexed(
             items = movies
         ){ index, movie ->
-            MovieCard(movie = movie, onCLick = {})
+            MovieCard(
+                movie = movie,
+                onCLick = {},
+//                navController = rememberNavController()
+            )
         }
     }
 }

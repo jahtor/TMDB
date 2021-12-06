@@ -17,8 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import ru.kinesis.tmdb.domain.model.Movie
+import ru.kinesis.tmdb.presentation.Screen
 import ru.kinesis.tmdb.util.DEFAULT_MOVIE_IMAGE
 import ru.kinesis.tmdb.util.LoadImage
 
@@ -26,7 +28,8 @@ import ru.kinesis.tmdb.util.LoadImage
 @Composable
 fun MovieCard(
     movie: Movie,
-    onCLick: () -> Unit
+    onCLick: () -> Unit,
+//    navController: NavController
 ){
     val height = 200.dp
     Card(
@@ -36,6 +39,9 @@ fun MovieCard(
             .fillMaxWidth()
             .height(height)
             .clickable(onClick = onCLick),
+//            .clickable(onClick = {
+//                navController.navigate(Screen.MovieInfo.withArgs(movie.id.toString()))
+//            }),
         elevation = 8.dp
     ){
         Row(

@@ -19,7 +19,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import ru.kinesis.tmdb.MainActivity
+import ru.kinesis.tmdb.Navigation
 import ru.kinesis.tmdb.R
+import ru.kinesis.tmdb.presentation.Screen
 import ru.kinesis.tmdb.presentation.components.CircularProgressBar
 import ru.kinesis.tmdb.presentation.components.MovieCard
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
@@ -82,26 +87,26 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
             }
         }
 
-//        Box(modifier = Modifier
-//            .fillMaxSize()
-////            .background(color = MaterialTheme.colors.secondary)
-//        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                //            .background(Color.White)
-            ) {
-                itemsIndexed(
-                    items = movies
-                ) { index, movie ->
-                    viewModel.onChangeScrollPosition(index)
-                    if((index + 1) >= (page * PAGE_SIZE) && !loading){
-                        viewModel.nextPage()
-                    }
-                    MovieCard(movie = movie, onCLick = {})
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+            //            .background(Color.White)
+        ) {
+            itemsIndexed(
+                items = movies
+            ) { index, movie ->
+                viewModel.onChangeScrollPosition(index)
+                if((index + 1) >= (page * PAGE_SIZE) && !loading){
+                    viewModel.nextPage()
                 }
+                MovieCard(
+                    movie = movie,
+                    onCLick = {
+//                        navController.navigate(Screen.MovieInfo.withArgs(movie.id.toString()))
+                    },
+                )
             }
-            CircularProgressBar(isDisplayed = loading)
         }
-//    }
+        CircularProgressBar(isDisplayed = loading)
+    }
 }
