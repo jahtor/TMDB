@@ -1,6 +1,7 @@
 package ru.kinesis.tmdb.network.model
 
 import com.google.gson.annotations.SerializedName
+import ru.kinesis.tmdb.domain.model.Genre
 
 data class MovieDto(
 
@@ -11,10 +12,12 @@ data class MovieDto(
     val backdrop_path: String? = null,
 
 //    val belongs_to_collection: Any,
+
     @SerializedName("budget")
     val budget: Int? = null,
 
-//    val genres: List<Genre>,
+    @SerializedName("genres")
+    val genres: List<Genre>? = null,
 
     @SerializedName("homepage")
     val homepage: String? = null,

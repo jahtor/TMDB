@@ -78,6 +78,8 @@ dependencies {
     //Hilt-lifecycle
     implementation "androidx.hilt:hilt-work:1.0.0"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-beta01")
+
 
     //Coil
     implementation("io.coil-kt:coil-compose:1.4.0")

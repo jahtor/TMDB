@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import ru.kinesis.tmdb.presentation.Screen
+import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
 import ru.kinesis.tmdb.presentation.screens.*
 import ru.kinesis.tmdb.ui.theme.TMDBTheme
 
@@ -26,9 +28,9 @@ class MainActivity : ComponentActivity() {
             TMDBTheme {
                 Surface(color = MaterialTheme.colors.background) {
 
-                    SearchScreen()
+//                    SearchScreen()
 //                    MovieInfo(585245)
-//                    Navigation()
+                    Navigation()
                 }
             }
         }
@@ -46,9 +48,14 @@ fun Navigation(){
             SplashScreen(navController)
         }
         composable(route = Screen.SearchScreen.route) {
-//            SearchScreen(navController = navController)
-            SearchScreen()
+            val viewModel = hiltViewModel<MovieListViewModel>()
+            SearchScreen(navController)
         }
+        composable(route = Screen.MovieInfo.route){
+            val viewModel = hiltViewModel<MovieListViewModel>()
+            MovieInfo()
+        }
+/*
         composable(
             route = Screen.MovieInfo.route + "/{id}",
             arguments = listOf(
@@ -57,8 +64,9 @@ fun Navigation(){
                 }
             )
         ) { entry ->
-            MovieInfo(id = entry.arguments?.getInt("id")!!)
-//            MovieInfo(id = entry.arguments?.getString("id")!!)
+            val viewModel = hiltViewModel<MovieListViewModel>()
+            MovieInfo(id = entry.arguments?.getString("id")!!)
         }
+*/
     }
 }

@@ -4,9 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.repository.MovieRepository
@@ -22,7 +20,10 @@ class MovieListViewModel @Inject constructor(
 
     val movies: MutableState<List<Movie>> = mutableStateOf(listOf())
 
-    val query = mutableStateOf("big")
+    val movie: MutableState<Movie> = mutableStateOf(Movie())
+    val movieId = mutableStateOf(0)
+
+    val query = mutableStateOf("matrix")
 
     val loading = mutableStateOf(false)
 
@@ -45,6 +46,24 @@ class MovieListViewModel @Inject constructor(
             movies.value = result
             loading.value = false
         }
+    }
+
+//    fun movieGet(id: String){
+    fun movieGet(){
+        viewModelScope.launch {
+            loading.value = true
+//            val result = repository.get(id = id.toInt())
+            println("MovieId: ${movieId.value}")
+            val result = repository.get(id = movieId.value)
+            println("Result: $result")
+            movie.value = result
+            loading.value = false
+        }
+    }
+
+    fun onMovieSelect(id: Int){
+        this.movieId.value = id
+        movieGet()
     }
 
     fun nextPage(){

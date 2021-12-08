@@ -1,5 +1,6 @@
 package ru.kinesis.tmdb.presentation.screens
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,13 +33,15 @@ import ru.kinesis.tmdb.presentation.movie_list.PAGE_SIZE
 
 @Composable
 @ExperimentalComposeUiApi
-fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
+fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = viewModel()) {
 
     val movies = viewModel.movies.value
     val query = viewModel.query.value
     val keyboardController = LocalSoftwareKeyboardController.current
     val loading = viewModel.loading.value
     val page = viewModel.page.value
+
+//    var movieId = viewModel.movieId.value
 
     Column() {
         Surface(
@@ -86,7 +89,7 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
                 )
             }
         }
-
+        // отображаем результаты поиска
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -102,7 +105,10 @@ fun SearchScreen(viewModel: MovieListViewModel = viewModel()) {
                 MovieCard(
                     movie = movie,
                     onCLick = {
+//                        viewModel.movieGet()
 //                        navController.navigate(Screen.MovieInfo.withArgs(movie.id.toString()))
+                        movie.id?.let { viewModel.onMovieSelect(it) }
+                        navController.navigate(Screen.MovieInfo.route)
                     },
                 )
             }

@@ -9,7 +9,7 @@ data class Movie(
     val backdrop_path: String? = null,
 //    val belongs_to_collection: Any,
     val budget: Int? = null,
-//    val genres: List<Genre>,
+    val genres: List<Genre>? = null,
     val homepage: String? = null,
     val id: Int? = null,
     val imdb_id: String? = null,
@@ -31,4 +31,3 @@ data class Movie(
     val vote_average: Double? = null,
     val vote_count: Int? = null
 )
-//    : Parcelable

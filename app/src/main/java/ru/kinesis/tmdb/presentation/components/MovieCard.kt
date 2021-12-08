@@ -29,7 +29,6 @@ import ru.kinesis.tmdb.util.LoadImage
 fun MovieCard(
     movie: Movie,
     onCLick: () -> Unit,
-//    navController: NavController
 ){
     val height = 200.dp
     Card(
@@ -39,9 +38,6 @@ fun MovieCard(
             .fillMaxWidth()
             .height(height)
             .clickable(onClick = onCLick),
-//            .clickable(onClick = {
-//                navController.navigate(Screen.MovieInfo.withArgs(movie.id.toString()))
-//            }),
         elevation = 8.dp
     ){
         Row(
@@ -53,7 +49,8 @@ fun MovieCard(
             movie.poster_path?.let { url ->
                 val image = LoadImage(
                     url = "https://image.tmdb.org/t/p/w185" + url,
-                    defaultImage = DEFAULT_MOVIE_IMAGE).value
+                    defaultImage = DEFAULT_MOVIE_IMAGE
+                ).value
                 image?.let { img ->
                     Image(
                         bitmap = img.asImageBitmap(),

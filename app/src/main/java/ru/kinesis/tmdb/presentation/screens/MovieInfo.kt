@@ -1,63 +1,113 @@
 package ru.kinesis.tmdb.presentation.screens
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
+import ru.kinesis.tmdb.util.DEFAULT_MOVIE_IMAGE
+import ru.kinesis.tmdb.util.LoadImage
 
 @Composable
-fun MovieInfo(id: Int) {
-    val viewModel: MovieListViewModel = viewModel()
+//fun MovieInfo(id: String, viewModel: MovieListViewModel = viewModel()) {
+fun MovieInfo(viewModel: MovieListViewModel = viewModel()) {
 
-    Text(text = "MovieId: $id")
-//    viewModel.getMovieInfo(id)
-/*
-    Scaffold(
-        topBar = {
-            ru.kinesis.tmdb.presentation.AppBars.TopBar(title = "title",
-            openSearch = {},
-            openFilters = {}
-        ) }
+//    viewModel.movieGet(id)
+    val movie = viewModel.movie.value
+    println("Movie.Value: ${movie}")
+
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(scrollState)
+        .background(MaterialTheme.colors.primary)
     ) {
-*/
-/*
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp)
-        ) {
-            items(viewModel.idList) { id ->
-                Row() {
-                    Image(
-                        painter = rememberImagePainter("https://image.tmdb.org/t/p/w154" + id.poster_path),
-                        contentDescription = "Poster preview",
-                        modifier = Modifier.size(128.dp)
-                    )
-                    Column() {
-                        Text(
-                            text = id.original_title,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(text = id.tagline)
-                        Text(text = "Released: " + id.release_date)
-                        if (id.revenue != 0) {
-                            Text(text = "Revenue: $" + id.revenue)
-                        } else Text(text = "Revenue: no data")
-                    }
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = id.overview)
+        movie.poster_path?.let { url ->
+            val poster = LoadImage(
+                url = "https://image.tmdb.org/t/p/w500" + url,
+                defaultImage = DEFAULT_MOVIE_IMAGE
+            ).value
+            poster?.let { img ->
+                Image(
+                    bitmap = img.asImageBitmap(),
+                    contentDescription = "poster",
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth
+                )
             }
         }
-*/
-//    }
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+        ) {
+//            item.title?.let { title ->
+                Text( // название (год)
+                    text = "${movie.title}" + " (${movie.release_date.toString().take(4)})",
+                    modifier = Modifier
+                        .fillMaxWidth()
+//                        .padding(8.dp)
+                        .wrapContentWidth(CenterHorizontally),
+                    color = Color.White,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold
+                )
+            Row( // жанры
+                modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(CenterHorizontally)
+            ) {
+                movie.genres?.forEach { genre ->
+                    Text(
+                        text = "${genre.name} ",
+                        color = Color.White,
+                        style = MaterialTheme.typography.body2,
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                Arrangement.SpaceBetween
+//                    .wrapContentWidth(CenterHorizontally)
+            ) {
+                Text( // рейтинг пользователей
+                    text = "User Score: ${movie.vote_average?.times(10)}%",
+                    color = Color.White,
+                    style = MaterialTheme.typography.body2,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text( //хронометраж
+                    text = "${movie.runtime?.div(60)}h ${movie.runtime?.rem(60)}m",
+                    color = Color.White,
+                    style = MaterialTheme.typography.body2,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+//            }
+            Text(
+                text = "Overview:",
+                color = Color.White,
+                style = MaterialTheme.typography.h6
+            )
+//            item.overview?.let { overview ->
+                Text( // обзор
+                    text = "${movie.overview}",
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    color = Color.White,
+                    style = MaterialTheme.typography.body2
+                )
+//            }
+        }
+    }
 }
