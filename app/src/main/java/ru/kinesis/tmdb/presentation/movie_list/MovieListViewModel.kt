@@ -8,20 +8,18 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.kinesis.tmdb.domain.model.Movie
 import ru.kinesis.tmdb.repository.MovieRepository
+import ru.kinesis.tmdb.util.Constants.PAGE_SIZE
 import javax.inject.Inject
 
-const val PAGE_SIZE = 20
+//const val PAGE_SIZE = 20
 
 //ViewModel для списка фильмов (из поиска)
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val repository: MovieRepository
-): ViewModel(){
+    ): ViewModel(){
 
     val movies: MutableState<List<Movie>> = mutableStateOf(listOf())
-
-    val movie: MutableState<Movie> = mutableStateOf(Movie())
-    val movieId = mutableStateOf(0)
 
     val query = mutableStateOf("matrix")
 
@@ -48,30 +46,13 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-//    fun movieGet(id: String){
-    fun movieGet(){
-        viewModelScope.launch {
-            loading.value = true
-//            val result = repository.get(id = id.toInt())
-            println("MovieId: ${movieId.value}")
-            val result = repository.get(id = movieId.value)
-            println("Result: $result")
-            movie.value = result
-            loading.value = false
-        }
-    }
-
-    fun onMovieSelect(id: Int){
-        this.movieId.value = id
-        movieGet()
-    }
-
     fun nextPage(){
         viewModelScope.launch {
             //предотвращаем излишнюю загрузку данных при быстром скролле
             if((movieListScrollPosition +1) >=(page.value * PAGE_SIZE)){
                 loading.value = true
-                incrementPage()
+//                incrementPage()
+                page.value++
 //                println("NextPage triggereg: ${page.value}")
 //                delay(3000L) //API fakedelay
                 if(page.value > 1){
@@ -87,7 +68,7 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    //добывляем новые результаты посика
+    //добавляем новые результаты поиска
     private fun appendMovies(movies: List<Movie>){
         val current = ArrayList(this.movies.value)
         current.addAll(movies)

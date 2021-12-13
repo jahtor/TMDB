@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -33,7 +34,7 @@ import ru.kinesis.tmdb.presentation.movie_list.PAGE_SIZE
 
 @Composable
 @ExperimentalComposeUiApi
-fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = viewModel()) {
+fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = hiltViewModel()) {
 
     val movies = viewModel.movies.value
     val query = viewModel.query.value
@@ -105,10 +106,8 @@ fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = v
                 MovieCard(
                     movie = movie,
                     onCLick = {
-//                        viewModel.movieGet()
-//                        navController.navigate(Screen.MovieInfo.withArgs(movie.id.toString()))
-                        movie.id?.let { viewModel.onMovieSelect(it) }
-                        navController.navigate(Screen.MovieInfo.route)
+//                        movie.id?.let { viewModel.onMovieSelect(it) }
+                        navController.navigate("movie_info/${movie.id}")
                     },
                 )
             }

@@ -12,18 +12,18 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import ru.kinesis.tmdb.presentation.movie_info.MovieInfoViewModel
 import ru.kinesis.tmdb.util.DEFAULT_MOVIE_IMAGE
 import ru.kinesis.tmdb.util.LoadImage
 
 @Composable
-//fun MovieInfo(id: String, viewModel: MovieListViewModel = viewModel()) {
-fun MovieInfo(viewModel: MovieListViewModel = viewModel()) {
+fun MovieInfo(navController: NavController, id: Int, viewModel: MovieInfoViewModel = hiltViewModel()) {
 
-//    viewModel.movieGet(id)
     val movie = viewModel.movie.value
-    println("Movie.Value: ${movie}")
+//    val movieId = viewModel.movieId.value
+    viewModel.onMovieSelect(id)
 
     val scrollState = rememberScrollState()
 
@@ -63,8 +63,8 @@ fun MovieInfo(viewModel: MovieListViewModel = viewModel()) {
                 )
             Row( // жанры
                 modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(CenterHorizontally)
+                    .fillMaxWidth()
+                    .wrapContentWidth(CenterHorizontally)
             ) {
                 movie.genres?.forEach { genre ->
                     Text(
