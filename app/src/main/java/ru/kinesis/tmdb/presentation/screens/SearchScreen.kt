@@ -1,7 +1,7 @@
 package ru.kinesis.tmdb.presentation.screens
 
-import android.os.Bundle
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -20,17 +20,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import ru.kinesis.tmdb.MainActivity
-import ru.kinesis.tmdb.Navigation
 import ru.kinesis.tmdb.R
-import ru.kinesis.tmdb.presentation.Screen
 import ru.kinesis.tmdb.presentation.components.CircularProgressBar
 import ru.kinesis.tmdb.presentation.components.MovieCard
+import ru.kinesis.tmdb.presentation.movie_info.MovieInfoViewModel
 import ru.kinesis.tmdb.presentation.movie_list.MovieListViewModel
-import ru.kinesis.tmdb.presentation.movie_list.PAGE_SIZE
+import ru.kinesis.tmdb.repository.MovieRepository
+import ru.kinesis.tmdb.util.Constants.PAGE_SIZE
 
 @Composable
 @ExperimentalComposeUiApi
@@ -42,16 +39,16 @@ fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = h
     val loading = viewModel.loading.value
     val page = viewModel.page.value
 
-//    var movieId = viewModel.movieId.value
+//    val movieInfoVM: MovieInfoViewModel = hiltViewModel()
 
-    Column() {
+    Column {
         Surface(
             color = MaterialTheme.colors.primary,
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,
             elevation = 8.dp
         ) {
-            Column() {
+            Column {
                 Spacer(modifier = Modifier.height(20.dp))
                 Image(
                     painter = painterResource(id = R.drawable.ic_tmdb_blue_long),
@@ -91,27 +88,33 @@ fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = h
             }
         }
         // отображаем результаты поиска
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-            //            .background(Color.White)
-        ) {
-            itemsIndexed(
-                items = movies
-            ) { index, movie ->
-                viewModel.onChangeScrollPosition(index)
-                if((index + 1) >= (page * PAGE_SIZE) && !loading){
-                    viewModel.nextPage()
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.secondary)
+        ){
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                //            .background(Color.White)
+            ) {
+                itemsIndexed(
+                    items = movies
+                ) { index, movie ->
+                    viewModel.onChangeScrollPosition(index)
+                    if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
+                        viewModel.nextPage()
+                    }
+                    MovieCard(
+                        movie = movie,
+                        onCLick = {
+//                            movieInfoVM.movieId.value = movie.id!!
+//                            println("onClick id: ${movieInfoVM.movieId.value}")
+                            navController.navigate("movie_info/${movie.id}")
+                        },
+                    )
                 }
-                MovieCard(
-                    movie = movie,
-                    onCLick = {
-//                        movie.id?.let { viewModel.onMovieSelect(it) }
-                        navController.navigate("movie_info/${movie.id}")
-                    },
-                )
             }
+            CircularProgressBar(isDisplayed = loading)
         }
-        CircularProgressBar(isDisplayed = loading)
     }
 }

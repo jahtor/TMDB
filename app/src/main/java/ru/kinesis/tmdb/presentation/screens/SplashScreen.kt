@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import ru.kinesis.tmdb.R
-import ru.kinesis.tmdb.presentation.Screen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -36,7 +35,7 @@ fun SplashScreen(navController: NavController) {
                 })
         )
         delay(3000L)
-        navController.navigate(Screen.SearchScreen.route)
+        navController.navigate("search_screen")
     }
 
     // Image #1abc9c

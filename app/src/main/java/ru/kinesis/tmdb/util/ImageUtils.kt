@@ -14,7 +14,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import ru.kinesis.tmdb.R
 
-const val DEFAULT_MOVIE_IMAGE = R.drawable.ic_no_movie_48
+//const val DEFAULT_MOVIE_IMAGE = R.drawable.ic_no_movie_48
 
 //асинхронная загрузка картинок
 @Composable
@@ -35,7 +35,7 @@ fun LoadImage(
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {
-                TODO("Not yet implemented")
+                bitmapState.value = null
             }
         })
 
@@ -49,7 +49,7 @@ fun LoadImage(
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {
-                TODO("Not yet implemented")
+                bitmapState.value = null
             }
         })
     return bitmapState

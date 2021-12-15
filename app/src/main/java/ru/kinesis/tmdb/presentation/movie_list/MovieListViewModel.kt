@@ -1,23 +1,30 @@
 package ru.kinesis.tmdb.presentation.movie_list
 
+import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.kinesis.tmdb.domain.model.Movie
+import ru.kinesis.tmdb.presentation.MovieApplication
 import ru.kinesis.tmdb.repository.MovieRepository
 import ru.kinesis.tmdb.util.Constants.PAGE_SIZE
 import javax.inject.Inject
-
-//const val PAGE_SIZE = 20
 
 //ViewModel для списка фильмов (из поиска)
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val repository: MovieRepository
     ): ViewModel(){
+//    private val repository: MovieRepository, app: Application
+//    ): AndroidViewModel(app){
 
     val movies: MutableState<List<Movie>> = mutableStateOf(listOf())
 
@@ -36,7 +43,7 @@ class MovieListViewModel @Inject constructor(
         viewModelScope.launch {
             loading.value = true
             resetSearchState()
-//            delay(3000L)
+//            delay(3000L) //API fakedelay
             val result = repository.search(
                 page = 1,
                 query = query.value
@@ -93,4 +100,13 @@ class MovieListViewModel @Inject constructor(
     fun onQueryChanged(query: String){
         this.query.value = query
     }
+
+/*
+    private fun hasInternetConnection(): Boolean{
+        val connectivityManager = getApplication<MovieApplication>().getSystemService(
+            Context.CONNECTIVITY_SERVICE
+        ) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
+    }
+*/
 }
