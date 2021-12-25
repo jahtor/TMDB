@@ -19,15 +19,17 @@ import ru.kinesis.tmdb.util.Constants.PAGE_SIZE
 
 @Composable
 @ExperimentalComposeUiApi
-fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = hiltViewModel()) {
+fun SearchScreen(
+    navController: NavController,
+    isNetworkAvailable: Boolean,
+    viewModel: MovieListViewModel = hiltViewModel()
+) {
 
     val movies = viewModel.movies.value
     val query = viewModel.query.value
     val keyboardController = LocalSoftwareKeyboardController.current
     val loading = viewModel.loading.value
     val page = viewModel.page.value
-
-//    val movieInfoVM: MovieInfoViewModel = hiltViewModel()
 
     Column {
         SearchBar(
@@ -36,34 +38,39 @@ fun SearchScreen(navController: NavController, viewModel: MovieListViewModel = h
             newSearch = viewModel::newSearch,
             keyboardController = keyboardController!!
         )
-        // отображаем результаты поиска
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.secondary)
-        ){
-            LazyColumn(
+
+        if (!isNetworkAvailable) { //проверяем доступность интернета
+            Text(text = "No Network Available!")
+        } else {
+
+            // отображаем результаты поиска
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                //            .background(Color.White)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.secondary)
             ) {
-                itemsIndexed(
-                    items = movies
-                ) { index, movie ->
-                    viewModel.onChangeScrollPosition(index)
-                    if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
-                        viewModel.nextPage()
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                    //            .background(Color.White)
+                ) {
+                    itemsIndexed(
+                        items = movies
+                    ) { index, movie ->
+                        viewModel.onChangeScrollPosition(index)
+                        if ((index + 1) >= (page * PAGE_SIZE) && !loading) {
+                            viewModel.nextPage()
+                        }
+                        MovieCard(
+                            movie = movie,
+                            onCLick = {
+                                navController.navigate("movie_info/${movie.id}")
+                            },
+                        )
                     }
-                    MovieCard(
-                        movie = movie,
-                        onCLick = {
-//                            movieInfoVM.movieId.value = movie.id!!
-//                            println("onClick id: ${movieInfoVM.movieId.value}")
-                            navController.navigate("movie_info/${movie.id}")
-                        },
-                    )
                 }
+                CircularProgressBar(isDisplayed = loading)
             }
-            CircularProgressBar(isDisplayed = loading)
         }
     }
 }

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavType
@@ -15,20 +16,26 @@ import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import ru.kinesis.tmdb.presentation.screens.*
 import ru.kinesis.tmdb.ui.theme.TMDBTheme
+import ru.kinesis.tmdb.util.ConnectionLiveData
 
 @AndroidEntryPoint
 @ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
 
+    lateinit var connectionLiveData: ConnectionLiveData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        connectionLiveData = ConnectionLiveData(this)
+
         setContent {
             TMDBTheme {
                 Surface(color = MaterialTheme.colors.background) {
 
-//                    SearchScreen()
-//                    MovieInfo(585245)
-                    Navigation()
+                    val isNetworkAvailable = connectionLiveData.observeAsState(false).value
+
+                    Navigation(isNetworkAvailable = isNetworkAvailable)
                 }
             }
         }
@@ -37,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @ExperimentalComposeUiApi
-fun Navigation(){
+fun Navigation(isNetworkAvailable: Boolean){
     //инит навигации
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "search_screen") {
@@ -46,13 +53,8 @@ fun Navigation(){
             SplashScreen(navController)
         }
         composable(route = "search_screen") {
-            SearchScreen(navController)
+            SearchScreen(navController, isNetworkAvailable)
         }
-/*
-        composable(route = "movie_info"){
-            MovieInfo(navController)
-        }
-*/
         composable(
             route = "movie_info/{id}",
             arguments = listOf(

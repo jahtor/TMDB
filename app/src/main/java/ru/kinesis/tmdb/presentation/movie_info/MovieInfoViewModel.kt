@@ -24,14 +24,14 @@ class MovieInfoViewModel @Inject constructor(
 
     val movie: MutableState<Movie> = mutableStateOf(Movie())
 
-    init{
-        movieGet()
-    }
+//    init{
+//        movieGet()
+//    }
 
     fun movieGet(){
         viewModelScope.launch {
             loading.value = true
-            Log.d("DEBUG movieGet(): ", movieId.value.toString())
+//            Log.d("DEBUG movieGet()", movieId.value.toString())
             val result = repository.get(id = movieId.value)
             movie.value = result
             loading.value = false

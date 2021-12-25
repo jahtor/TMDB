@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
 import ru.kinesis.tmdb.presentation.movie_info.MovieInfoViewModel
 import ru.kinesis.tmdb.util.Constants.DEFAULT_MOVIE_IMAGE
 import ru.kinesis.tmdb.util.LoadImage
@@ -24,10 +26,8 @@ import ru.kinesis.tmdb.util.LoadImage
 fun MovieInfo(navController: NavController, id: Int, viewModel: MovieInfoViewModel = hiltViewModel()) {
 
     val movie = viewModel.movie.value
-//    var movieId = remember { viewModel.movieId.value }
-//    movieId = id
-    Log.d("DEBUG MovieInfo: ", movie.toString())
-//    viewModel.onMovieSelect(id)
+//    Log.d("DEBUG MovieInfo", movie.toString())
+    viewModel.onMovieSelect(id)
 
     val scrollState = rememberScrollState()
 
@@ -37,20 +37,30 @@ fun MovieInfo(navController: NavController, id: Int, viewModel: MovieInfoViewMod
         .background(MaterialTheme.colors.primary)
     ) {
         movie.poster_path?.let { url ->
-            val poster = LoadImage(
-                url = "https://image.tmdb.org/t/p/w500" + url,
-                defaultImage = DEFAULT_MOVIE_IMAGE
-            ).value
-            poster?.let { img ->
-                Image(
-                    bitmap = img.asImageBitmap(),
-                    contentDescription = "poster",
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth
-                )
-            }
-        }
 
+            Image(
+                painter = rememberImagePainter(
+                    "https://image.tmdb.org/t/p/w500" + url,
+                    builder = { size(OriginalSize) }
+                ),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.FillWidth
+            )
+
+//            val poster = LoadImage(
+//                url = "https://image.tmdb.org/t/p/w500" + url,
+//                defaultImage = DEFAULT_MOVIE_IMAGE
+//            ).value
+//            poster?.let { img ->
+//                Image(
+//                    bitmap = img.asImageBitmap(),
+//                    contentDescription = "poster",
+//                    modifier = Modifier.fillMaxWidth(),
+//                    contentScale = ContentScale.FillWidth
+//                )
+//            }
+        }
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
